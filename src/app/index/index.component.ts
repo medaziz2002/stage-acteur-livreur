@@ -11,11 +11,7 @@ export class IndexComponent implements OnInit {
   constructor(private commandeService:CommandeService) { }
 
   ngOnInit(): void {
-    this.commandeService.listeCommande().subscribe(data=>
-      {
-        this.totalCommande=data.length;
-      }
-    )
+ 
   }
 
 }

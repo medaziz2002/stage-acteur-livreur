@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { Livreur } from '../Model/Livreur.model';
 import { LoginService } from '../services/login.service';
 import { NgToastService } from 'ng-angular-popup';
+
+import { JwtHelperService } from '@auth0/angular-jwt';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -73,6 +75,12 @@ export class LoginComponent implements OnInit {
           console.log(res);
           let token = res.token;
           localStorage.setItem("myToken",token);
+          const helper = new JwtHelperService ();
+
+        const decodedToken = helper.decodeToken(token);
+        
+       
+        console.log("lavvvvvv"+localStorage.setItem("idLivreur",decodedToken?.data?.id));
           this.router.navigate(['/ajout-contact']);
         },
         err=>{

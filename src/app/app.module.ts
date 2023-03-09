@@ -3,9 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AjoutCommandeComponent } from './ajout-commande/ajout-commande.component';
 import { ListeCommandeComponent } from './liste-commande/liste-commande.component';
-import { ModifierCommandeComponent } from './modifier-commande/modifier-commande.component';
 import { AjoutContactComponent } from './ajout-contact/ajout-contact.component';
 import { HeaderComponent } from './header/header.component';
 import { MenuComponent } from './menu/menu.component';
@@ -20,9 +18,9 @@ import { ProfilComponent } from './profil/profil.component';
 @NgModule({
   declarations: [
     AppComponent,
-    AjoutCommandeComponent,
+   
     ListeCommandeComponent,
-    ModifierCommandeComponent,
+    
     AjoutContactComponent,
     HeaderComponent,
     MenuComponent,

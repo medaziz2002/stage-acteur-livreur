@@ -34,51 +34,46 @@
         <!-- End of Topbar -->
 
         <!-- Begin Page Content -->
-        <div class="container-fluid">
-
-          <!-- Page Heading -->
-
-          <div>
-            <a  routerLink="/ajout-commande" class="btn btn-sm btn-primary mb-2">Ajouter
-              Commande</a>
-          </div>
-
-        </div>
+       
         <div class="col ml-2">
           <div class="card shadow mb-4">
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-              <h6 class="m-0 font-weight-bold text-primary">Liste Commande</h6>
+              <h6 class="m-0 font-weight-bold text-primary">Liste livraison</h6>
             </div>
+           
 
             <div class="card-body">
               <table class="table">
                 <thead>
                   <tr>
                     <th>Id</th>
-                    <th>Libelle</th>
-                    <th>Quantité</th>
-                    <th>Prix</th>
-                    <th>Date</th>
-                    <th>Gouvernorat</th>
-                    <th>Gsm client</th>
-                    <th>Adresse client</th>
-                    <th>Photo</th>
-                    <th colspan="2">Action</th>
+                    <th>Commande</th>
+                    <th>Etat</th>
+                    <th>Action</th>
+                   
                   </tr>
                 </thead>
-                <tbody *ngFor="let i of commandes">
+                <tbody *ngFor="let commande of commandeService.listALivrer">
                   <tr>
-                    <td>{{i.id}}</td>
-                    <td>{{i.libelle}}</td>
-                    <td>{{i.qte}}</td>
-                    <td>{{i.prix}}</td>
-                    <td>{{i.date | date:'dd/MM/yyyy'}}</td>
-                    <th>{{i.gouvernorat}}</th>
-                    <th>{{i.teleclient}}</th>
-                    <th>{{i.adresseclient}}</th>
-                    <th><img [src]="i.photo" height="100" /></th>
-                    <th><i class="fas fa-trash" (click)="supprimerCommande(i)"  ></i></th>
-                    <th><i class="fas fa-edit" [routerLink]="['/modifier-commande',i.id]" ></i></th>
+                    <td>{{commande.id}}</td>
+                  <td>{{commande?.commande?.libelle}}</td>
+                  
+                  <td>
+                    <div *ngIf="a==commande.id">
+                      <span  class="btn btn-success">Livré</span>
+                    </div>
+                    
+                    <div *ngIf="a!=commande.id">
+                      <span  class="btn btn-warning">en cours</span>
+                    </div>
+                  
+                  </td>
+                  <td>
+                    <div >
+                      <button    (click)="confirmerLiv(this.commande.commande?.id)"  type="submit"  class="btn btn-info">Confirmation livraison</button>
+                    </div>
+                  </td>
+
                   </tr>
 
                 </tbody>

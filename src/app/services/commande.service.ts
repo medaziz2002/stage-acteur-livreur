@@ -1,6 +1,7 @@
 
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { JwtHelperService } from '@auth0/angular-jwt';
 import { Observable } from 'rxjs';
 import { Commande } from '../Model/Commande.model';
 
@@ -14,39 +15,63 @@ const httpOptions={
   providedIn: 'root'
 })
 export class CommandeService {
-  apiURL: string = 'http://localhost:8081/api/commande';
+  apiUrl: string = 'http://localhost:8081/api';
 
+  listALivrer:any=[]
   constructor(private http:HttpClient) {}
 
-
-
-  ajouterCommande(commande:Commande):Observable<Commande>{
-    return this.http.post<Commande>(this.apiURL, commande,httpOptions);
+  getAllMyListAllLivre()
+{
+    this.getAllMyListALivrerFromApi().subscribe((data)=>{
+       
+      this.listALivrer=data
+    })
+  }
+  getAllMyListALivrerFromApi()
+  {
+    return this.http.get<any>(this.apiUrl+"/livreur/mon-list-a-livrer/"+localStorage.getItem("idLivreur"));
   }
 
-  listeCommande():Observable<Commande[]>
-{
-  return this.http.get<Commande[]>(this.apiURL);
-}
+  isLivreurInIn(){
 
-supprimerCommande(id:number)
-{
-const url=`${this.apiURL}/${id}`;
-return this.http.delete(url,httpOptions);
-}
+    let token = localStorage.getItem("myToken");
+    const helper = new JwtHelperService();
 
-consulterCommande(id :number):Observable<Commande>
-{
-const url=`${this.apiURL+"/cmd"}/${id}`;
-return this.http.get<Commande>(url);
-}
+    const decodedToken = helper.decodeToken(token);
+     
+    
+    
+    if (decodedToken?.data?.livreur && decodedToken?.data?.livreur!=undefined) {
+      console.log("is true")
+      return true ;
+    } else {
+      console.log("is false")
+      return false;
+    }
+  }
 
 
-modifierCommande(a:Commande):Observable<Commande>
-{
-  const url=`${this.apiURL}/${a.id}`;
-  return this.http.put<Commande>(url, a,httpOptions);
-}
+
+
+  isLoggedIn(){
+
+    let token = localStorage.getItem("myToken");
+    
+    if (token) {
+      return true ;
+    } else {
+      return false;
+    }
+  }
+
+
+  confirmFactureByIdFromApi(id:number)
+  { 
+   
+    return this.http.patch<any>(this.apiUrl+"/livraison/confirme/"+id,id);
+  }
+
+
 
 
 
